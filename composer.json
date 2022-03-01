@@ -1,0 +1,25 @@
+{
+    "name": "allekurier/wz-api-client",
+    "license": "MIT",
+    "require": {
+        "php": ">=7.4.0",
+        "ext-json": "*",
+        "myclabs/php-enum": "^1.7",
+        "php-curl-class/php-curl-class": "^9.5.0",
+        "ramsey/uuid": "^4.2.0",
+        "webmozart/assert": "^1.10.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Allekurier\\WygodneZwroty\\Api\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Allekurier\\WygodneZwroty\\ApiTests\\": "tests/"
+        }
+    }
+}
