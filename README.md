@@ -21,6 +21,8 @@ composer require allekurier/wz-api-client
 
 ## Użycie biblioteki
 
+W celu nawiązania połączenia z API należy podać dane autoryzacyjne.
+
 ```
 $credentials = new Allekurier\WygodneZwroty\Api\Credentials('kod_klienta', 'token_autoryzacyjny');
 $api = new Allekurier\WygodneZwroty\Api\Client($credentials);
