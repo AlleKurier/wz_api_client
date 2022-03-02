@@ -31,9 +31,9 @@ gdzie:
 * `kod_klienta`: Kod autoryzacyjny klienta.
 * `token_autoryzacyjny`: Token autoryzacyjny.
 
-# Pobranie danych przesyłki
+### Pobranie danych przesyłki
 
-## PHP
+#### PHP
 
 ```
 $command = new Allekurier\WygodneZwroty\Api\Command\GetOrderByTrackingNumber\GetOrderByTrackingNumberRequest(
@@ -79,7 +79,7 @@ gdzie:
 
 * `numer_sledzenia`: Numer śledzenia przesyłki lub numer, który został zeskanowany na liście przewozowym.
 
-## cURL
+#### cURL
 
 ```bash
 curl -X GET \
