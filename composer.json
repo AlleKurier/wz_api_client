@@ -1,6 +1,8 @@
 {
     "name": "allekurier/wz-api-client",
-    "license": "MIT",
+    "type" : "library",
+    "license" : "MIT",
+    "homepage" : "https://wygodnezwroty.pl",
     "require": {
         "php": ">=7.4.0",
         "ext-json": "*",

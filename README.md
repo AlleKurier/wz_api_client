@@ -26,6 +26,11 @@ $credentials = new Allekurier\WygodneZwroty\Api\Credentials('kod_klienta', 'toke
 $api = new Allekurier\WygodneZwroty\Api\Client($credentials);
 ```
 
+gdzie:
+
+* `kod_klienta`: Kod autoryzacyjny klienta.
+* `token_autoryzacyjny`: Token autoryzacyjny.
+
 # Pobranie danych przesyłki
 
 ## PHP
@@ -72,18 +77,21 @@ if ($response->hasErrors()) {
 
 gdzie:
 
-* `numer_sledzenia`: Jest to numer śledzenia przesyłki lub numer, który został zeskanowany na liście przewozowym.
+* `numer_sledzenia`: Numer śledzenia przesyłki lub numer, który został zeskanowany na liście przewozowym.
 
 ## cURL
 
 ```bash
 curl -X GET \
-  https://new.allekurier.pl/api/v1/order/trackingnumber/numer_sledzenia \
+  https://new.allekurier.pl/api/v1/kod_klienta/order/trackingnumber/numer_sledzenia \
   -H 'accept: application/json' \
   -H 'cache-control: no-cache' \
-  -H 'content-type: application/x-www-form-urlencoded'
+  -H 'content-type: application/x-www-form-urlencoded' \
+  -H 'authorization: token_autoryzacyjny'
 ```
 
 gdzie:
 
-* `numer_sledzenia`: Jest to numer śledzenia przesyłki lub numer, który został zeskanowany na liście przewozowym.
+* `kod_klienta`: Kod autoryzacyjny klienta.
+* `token_autoryzacyjny`: Token autoryzacyjny.
+* `numer_sledzenia`: Numer śledzenia przesyłki lub numer, który został zeskanowany na liście przewozowym.
