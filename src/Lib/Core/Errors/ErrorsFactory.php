@@ -11,8 +11,6 @@ declare(strict_types=1);
 
 namespace Allekurier\WygodneZwroty\Api\Lib\Core\Errors;
 
-use Allekurier\WygodneZwroty\Api\Lib\Core\Http\ErrorLevelEnum;
-
 class ErrorsFactory implements ErrorsFactoryInterface
 {
     /**

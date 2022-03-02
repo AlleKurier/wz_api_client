@@ -38,7 +38,11 @@ $command = new Allekurier\WygodneZwroty\Api\Command\GetOrderByTrackingNumber\Get
 $response = $api->call($command);
 
 if ($response->hasErrors()) {
-    var_dump($response->getErrors());
+    foreach ($response->getErrors() as $error) {
+        echo $error->getMessage().PHP_EOL;
+        echo $error->getCode().PHP_EOL;
+        echo $error->getLevel()->getValue().PHP_EOL;
+    }
 } else {
     echo $response->getOrder()->getHid().PHP_EOL;
     echo $response->getOrder()->getUser()->getEmail().PHP_EOL;

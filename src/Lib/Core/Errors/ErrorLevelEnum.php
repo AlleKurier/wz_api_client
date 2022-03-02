@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Allekurier\WygodneZwroty\Api\Lib\Core\Http;
+namespace Allekurier\WygodneZwroty\Api\Lib\Core\Errors;
 
 use Allekurier\WygodneZwroty\Api\Lib\Common\Enum\AbstractEnum;
 
