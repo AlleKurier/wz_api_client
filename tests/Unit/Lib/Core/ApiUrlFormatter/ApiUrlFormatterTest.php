@@ -1,4 +1,11 @@
 <?php
+/*
+ * ApiUrlFormatterTest.php
+ *
+ * @author AlleKurier
+ * @license https://opensource.org/licenses/MIT The MIT License
+ * @copyright Copyright (c) 2022 Allekurier Sp. z o.o.
+ */
 
 namespace Allekurier\WygodneZwroty\ApiTests\Unit\Lib\Core\ApiUrlFormatter;
 

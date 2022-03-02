@@ -18,7 +18,7 @@ class Curl implements HttpInterface
     /**
      * {@inheritDoc}
      */
-    public function setHeader(string $key, string $value): void
+    public function addHeader(string $key, string $value): void
     {
         $this->headers[$key] = $value;
     }
@@ -26,7 +26,7 @@ class Curl implements HttpInterface
     /**
      * {@inheritDoc}
      */
-    public function clearHeader(string $key): void
+    public function removeHeader(string $key): void
     {
         unset($this->headers[$key]);
     }

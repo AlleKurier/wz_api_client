@@ -60,7 +60,7 @@ class Api
         $this->credentials = $credentials;
         $this->apiUrl = $apiUrl;
 
-        $this->http->setHeader('Content-Type', 'application/json');
+        $this->http->addHeader('Content-Type', 'application/json');
     }
 
     /**
@@ -83,8 +83,8 @@ class Api
 
         $authorizationHeader = $this->authorization->getHttpHeader($this->credentials->getToken());
 
-        $this->http->clearHeader(self::HTTP_HEADER_AUTORIZATION);
-        $this->http->setHeader(self::HTTP_HEADER_AUTORIZATION, $authorizationHeader);
+        $this->http->removeHeader(self::HTTP_HEADER_AUTORIZATION);
+        $this->http->addHeader(self::HTTP_HEADER_AUTORIZATION, $authorizationHeader);
 
         $httpMethod = $request->getHttpMethod();
 

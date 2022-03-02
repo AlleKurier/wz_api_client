@@ -1,5 +1,8 @@
 # Biblioteka kliencka API dla Wygodnych Zwrotów
 
+[![Autor](http://img.shields.io/badge/author-wygodnezwroty.pl-blue.svg?style=flat-square)](https://wygodnezwroty.pl)
+[![Licencja](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://github.com/kocuj/di/blob/master/LICENSE.md)
+
 ## Wymagania
 
 Biblioteka ma następujące wymagania:
@@ -23,6 +26,8 @@ $api = new Allekurier\WygodneZwroty\Api\Client($credentials);
 ```
 
 # Pobranie danych przesyłki
+
+## PHP
 
 ```
 $command = new Allekurier\WygodneZwroty\Api\Command\GetOrderByTrackingNumber\GetOrderByTrackingNumberRequest(
@@ -58,6 +63,20 @@ if ($response->hasErrors()) {
     }
     var_dump($response->getOrder()->getAdditionalFields()).PHP_EOL;
 }
+```
+
+gdzie:
+
+* `numer_sledzenia`: Jest to numer śledzenia przesyłki lub numer, który został zeskanowany na liście przewozowym.
+
+## cURL
+
+```bash
+curl -X GET \
+  https://new.allekurier.pl/api/v1/order/trackingnumber/numer_sledzenia \
+  -H 'accept: application/json' \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/x-www-form-urlencoded'
 ```
 
 gdzie:

@@ -1,6 +1,6 @@
 <?php
 /*
- * Enum.php
+ * AbstractEnum.php
  *
  * @author AlleKurier
  * @license https://opensource.org/licenses/MIT The MIT License

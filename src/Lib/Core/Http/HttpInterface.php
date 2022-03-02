@@ -12,19 +12,19 @@ namespace Allekurier\WygodneZwroty\Api\Lib\Core\Http;
 interface HttpInterface
 {
     /**
-     * Ustawienie nagłówka HTTP
+     * Dodanie nagłówka HTTP
      *
      * @param string $key
      * @param string $value
      */
-    public function setHeader(string $key, string $value): void;
+    public function addHeader(string $key, string $value): void;
 
     /**
-     * Wyczyszczenie nagłówka HTTP
+     * Usunięcie nagłówka HTTP
      *
      * @param string $key
      */
-    public function clearHeader(string $key): void;
+    public function removeHeader(string $key): void;
 
     /**
      * Pobranie danych z adresu URL
