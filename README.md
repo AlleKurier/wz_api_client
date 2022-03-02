@@ -8,6 +8,7 @@
 Biblioteka ma następujące wymagania:
 
 * PHP 7.4 lub nowsza wersja;
+* rozszerzenie "ext-curl" do PHP;
 * rozszerzenie "ext-json" do PHP.
 
 ## Instalacja
