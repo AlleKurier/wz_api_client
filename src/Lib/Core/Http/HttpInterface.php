@@ -7,7 +7,7 @@
  * @copyright Copyright (c) 2022 Allekurier Sp. z o.o.
  */
 
-namespace Allekurier\WygodneZwroty\Api\Lib\Core\Http;
+namespace AlleKurier\WygodneZwroty\Api\Lib\Core\Http;
 
 interface HttpInterface
 {

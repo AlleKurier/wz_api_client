@@ -24,8 +24,8 @@ composer require allekurier/wz-api-client
 W celu nawiązania połączenia z API należy podać dane autoryzacyjne.
 
 ```
-$credentials = new Allekurier\WygodneZwroty\Api\Credentials('kod_klienta', 'token_autoryzacyjny');
-$api = new Allekurier\WygodneZwroty\Api\Client($credentials);
+$credentials = new AlleKurier\WygodneZwroty\Api\Credentials('kod_klienta', 'token_autoryzacyjny');
+$api = new AlleKurier\WygodneZwroty\Api\Client($credentials);
 ```
 
 gdzie:
@@ -38,12 +38,12 @@ gdzie:
 #### PHP
 
 ```
-$command = new Allekurier\WygodneZwroty\Api\Command\GetOrderByTrackingNumber\GetOrderByTrackingNumberRequest(
+$request = new AlleKurier\WygodneZwroty\Api\Command\GetOrderByTrackingNumber\GetOrderByTrackingNumberRequest(
     'numer_sledzenia'
 );
 
-/** @var \Allekurier\WygodneZwroty\Api\Command\GetOrderByTrackingNumber\GetOrderByTrackingNumberResponse|\Allekurier\WygodneZwroty\Api\Lib\Core\Errors\ErrorsInterface $response */
-$response = $api->call($command);
+/** @var \AlleKurier\WygodneZwroty\Api\Command\GetOrderByTrackingNumber\GetOrderByTrackingNumberResponse|\AlleKurier\WygodneZwroty\Api\Lib\Core\Errors\ErrorsInterface $response */
+$response = $api->call($request);
 
 if ($response->hasErrors()) {
     foreach ($response->getErrors() as $error) {
@@ -88,7 +88,7 @@ curl -X GET \
   https://new.allekurier.pl/api/v1/kod_klienta/order/trackingnumber/numer_sledzenia \
   -H 'accept: application/json' \
   -H 'cache-control: no-cache' \
-  -H 'content-type: application/x-www-form-urlencoded' \
+  -H 'content-type: application/json' \
   -H 'authorization: token_autoryzacyjny'
 ```
 

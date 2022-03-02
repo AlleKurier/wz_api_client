@@ -7,10 +7,10 @@
  * @copyright Copyright (c) 2022 Allekurier Sp. z o.o.
  */
 
-namespace Allekurier\WygodneZwroty\ApiTests\Unit\Lib\Core\Authorization;
+namespace AlleKurier\WygodneZwroty\ApiTests\Unit\Lib\Core\Authorization;
 
-use Allekurier\WygodneZwroty\Api\Lib\Core\Authorization\Authorization;
-use Allekurier\WygodneZwroty\Api\Lib\Core\Authorization\AuthorizationInterface;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\Authorization\Authorization;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\Authorization\AuthorizationInterface;
 use PHPUnit\Framework\TestCase;
 
 class AuthorizationTest extends TestCase

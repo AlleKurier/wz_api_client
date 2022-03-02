@@ -9,9 +9,9 @@
 
 declare(strict_types=1);
 
-namespace Allekurier\WygodneZwroty\Api\Lib\Core\ApiUrlFormatter;
+namespace AlleKurier\WygodneZwroty\Api\Lib\Core\ApiUrlFormatter;
 
-use Allekurier\WygodneZwroty\Api\Command\RequestInterface;
+use AlleKurier\WygodneZwroty\Api\Command\RequestInterface;
 
 class ApiUrlFormatter implements ApiUrlFormatterInterface
 {

@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Allekurier\WygodneZwroty\Api\Lib\Core\Http;
+namespace AlleKurier\WygodneZwroty\Api\Lib\Core\Http;
 
 class Curl implements HttpInterface
 {

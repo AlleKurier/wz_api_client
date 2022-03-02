@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Allekurier\WygodneZwroty\Api\Lib\Common\Enum;
+namespace AlleKurier\WygodneZwroty\Api\Lib\Common\Enum;
 
 use MyCLabs\Enum\Enum;
 

@@ -9,15 +9,15 @@
 
 declare(strict_types=1);
 
-namespace Allekurier\WygodneZwroty\Api\Lib\Core\Api;
+namespace AlleKurier\WygodneZwroty\Api\Lib\Core\Api;
 
-use Allekurier\WygodneZwroty\Api\Command\RequestInterface;
-use Allekurier\WygodneZwroty\Api\Command\ResponseInterface;
-use Allekurier\WygodneZwroty\Api\Credentials;
-use Allekurier\WygodneZwroty\Api\Lib\Core\ApiUrlFormatter\ApiUrlFormatterInterface;
-use Allekurier\WygodneZwroty\Api\Lib\Core\Authorization\AuthorizationInterface;
-use Allekurier\WygodneZwroty\Api\Lib\Core\Http\HttpInterface;
-use Allekurier\WygodneZwroty\Api\Lib\Core\ResponseParser\ResponseParserInterface;
+use AlleKurier\WygodneZwroty\Api\Command\RequestInterface;
+use AlleKurier\WygodneZwroty\Api\Command\ResponseInterface;
+use AlleKurier\WygodneZwroty\Api\Credentials;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\ApiUrlFormatter\ApiUrlFormatterInterface;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\Authorization\AuthorizationInterface;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\Http\HttpInterface;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\ResponseParser\ResponseParserInterface;
 
 class Api
 {

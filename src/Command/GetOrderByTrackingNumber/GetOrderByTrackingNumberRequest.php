@@ -9,11 +9,11 @@
 
 declare(strict_types=1);
 
-namespace Allekurier\WygodneZwroty\Api\Command\GetOrderByTrackingNumber;
+namespace AlleKurier\WygodneZwroty\Api\Command\GetOrderByTrackingNumber;
 
-use Allekurier\WygodneZwroty\Api\Command\RequestInterface;
-use Allekurier\WygodneZwroty\Api\Command\ResponseInterface;
-use Allekurier\WygodneZwroty\Api\Lib\Core\Http\MethodEnum;
+use AlleKurier\WygodneZwroty\Api\Command\RequestInterface;
+use AlleKurier\WygodneZwroty\Api\Command\ResponseInterface;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\Http\MethodEnum;
 
 class GetOrderByTrackingNumberRequest implements RequestInterface
 {

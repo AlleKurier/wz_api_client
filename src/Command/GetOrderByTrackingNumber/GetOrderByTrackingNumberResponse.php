@@ -9,12 +9,12 @@
 
 declare(strict_types=1);
 
-namespace Allekurier\WygodneZwroty\Api\Command\GetOrderByTrackingNumber;
+namespace AlleKurier\WygodneZwroty\Api\Command\GetOrderByTrackingNumber;
 
-use Allekurier\WygodneZwroty\Api\Command\AbstractResponse;
-use Allekurier\WygodneZwroty\Api\Command\ResponseInterface;
-use Allekurier\WygodneZwroty\Api\Lib\Common\Assert\Assert;
-use Allekurier\WygodneZwroty\Api\Model\Response\Order;
+use AlleKurier\WygodneZwroty\Api\Command\AbstractResponse;
+use AlleKurier\WygodneZwroty\Api\Command\ResponseInterface;
+use AlleKurier\WygodneZwroty\Api\Lib\Common\Assert\Assert;
+use AlleKurier\WygodneZwroty\Api\Model\Response\Order;
 
 class GetOrderByTrackingNumberResponse extends AbstractResponse implements ResponseInterface
 {

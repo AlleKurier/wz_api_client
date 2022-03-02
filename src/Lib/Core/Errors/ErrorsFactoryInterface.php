@@ -7,7 +7,7 @@
  * @copyright Copyright (c) 2022 Allekurier Sp. z o.o.
  */
 
-namespace Allekurier\WygodneZwroty\Api\Lib\Core\Errors;
+namespace AlleKurier\WygodneZwroty\Api\Lib\Core\Errors;
 
 interface ErrorsFactoryInterface
 {

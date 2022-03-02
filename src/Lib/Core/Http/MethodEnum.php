@@ -9,9 +9,9 @@
 
 declare(strict_types=1);
 
-namespace Allekurier\WygodneZwroty\Api\Lib\Core\Http;
+namespace AlleKurier\WygodneZwroty\Api\Lib\Core\Http;
 
-use Allekurier\WygodneZwroty\Api\Lib\Common\Enum\AbstractEnum;
+use AlleKurier\WygodneZwroty\Api\Lib\Common\Enum\AbstractEnum;
 
 /**
  * @method static self GET()

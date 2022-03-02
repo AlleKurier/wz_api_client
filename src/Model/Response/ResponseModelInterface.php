@@ -7,7 +7,7 @@
  * @copyright Copyright (c) 2022 Allekurier Sp. z o.o.
  */
 
-namespace Allekurier\WygodneZwroty\Api\Model\Response;
+namespace AlleKurier\WygodneZwroty\Api\Model\Response;
 
 interface ResponseModelInterface
 {

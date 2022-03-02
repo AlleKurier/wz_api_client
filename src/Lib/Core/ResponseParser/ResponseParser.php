@@ -9,11 +9,11 @@
 
 declare(strict_types=1);
 
-namespace Allekurier\WygodneZwroty\Api\Lib\Core\ResponseParser;
+namespace AlleKurier\WygodneZwroty\Api\Lib\Core\ResponseParser;
 
-use Allekurier\WygodneZwroty\Api\Command\RequestInterface;
-use Allekurier\WygodneZwroty\Api\Command\ResponseInterface;
-use Allekurier\WygodneZwroty\Api\Lib\Core\Errors\ErrorsFactoryInterface;
+use AlleKurier\WygodneZwroty\Api\Command\RequestInterface;
+use AlleKurier\WygodneZwroty\Api\Command\ResponseInterface;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\Errors\ErrorsFactoryInterface;
 
 class ResponseParser implements ResponseParserInterface
 {

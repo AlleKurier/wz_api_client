@@ -7,7 +7,7 @@
  * @copyright Copyright (c) 2022 Allekurier Sp. z o.o.
  */
 
-namespace Allekurier\WygodneZwroty\Api\Lib\Core\Authorization;
+namespace AlleKurier\WygodneZwroty\Api\Lib\Core\Authorization;
 
 interface AuthorizationInterface
 {

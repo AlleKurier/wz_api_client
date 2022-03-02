@@ -7,9 +7,9 @@
  * @copyright Copyright (c) 2022 Allekurier Sp. z o.o.
  */
 
-namespace Allekurier\WygodneZwroty\Api\Lib\Core\ApiUrlFormatter;
+namespace AlleKurier\WygodneZwroty\Api\Lib\Core\ApiUrlFormatter;
 
-use Allekurier\WygodneZwroty\Api\Command\RequestInterface;
+use AlleKurier\WygodneZwroty\Api\Command\RequestInterface;
 
 interface ApiUrlFormatterInterface
 {

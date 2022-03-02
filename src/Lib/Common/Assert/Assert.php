@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Allekurier\WygodneZwroty\Api\Lib\Common\Assert;
+namespace AlleKurier\WygodneZwroty\Api\Lib\Common\Assert;
 
 /**
  * @see https://github.com/webmozarts/assert

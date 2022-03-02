@@ -7,14 +7,14 @@
  * @copyright Copyright (c) 2022 Allekurier Sp. z o.o.
  */
 
-namespace Allekurier\WygodneZwroty\ApiTests\Unit\Lib\Core\ResponseParser;
+namespace AlleKurier\WygodneZwroty\ApiTests\Unit\Lib\Core\ResponseParser;
 
-use Allekurier\WygodneZwroty\Api\Command\RequestInterface;
-use Allekurier\WygodneZwroty\Api\Command\ResponseInterface;
-use Allekurier\WygodneZwroty\Api\Lib\Core\Errors\ErrorsFactoryInterface;
-use Allekurier\WygodneZwroty\Api\Lib\Core\Errors\ErrorsInterface;
-use Allekurier\WygodneZwroty\Api\Lib\Core\ResponseParser\ResponseParser;
-use Allekurier\WygodneZwroty\Api\Lib\Core\ResponseParser\ResponseParserInterface;
+use AlleKurier\WygodneZwroty\Api\Command\RequestInterface;
+use AlleKurier\WygodneZwroty\Api\Command\ResponseInterface;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\Errors\ErrorsFactoryInterface;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\Errors\ErrorsInterface;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\ResponseParser\ResponseParser;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\ResponseParser\ResponseParserInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

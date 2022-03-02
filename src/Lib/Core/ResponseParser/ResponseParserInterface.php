@@ -7,10 +7,10 @@
  * @copyright Copyright (c) 2022 Allekurier Sp. z o.o.
  */
 
-namespace Allekurier\WygodneZwroty\Api\Lib\Core\ResponseParser;
+namespace AlleKurier\WygodneZwroty\Api\Lib\Core\ResponseParser;
 
-use Allekurier\WygodneZwroty\Api\Command\RequestInterface;
-use Allekurier\WygodneZwroty\Api\Command\ResponseInterface;
+use AlleKurier\WygodneZwroty\Api\Command\RequestInterface;
+use AlleKurier\WygodneZwroty\Api\Command\ResponseInterface;
 
 interface ResponseParserInterface
 {

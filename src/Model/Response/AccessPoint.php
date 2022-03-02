@@ -9,9 +9,9 @@
 
 declare(strict_types=1);
 
-namespace Allekurier\WygodneZwroty\Api\Model\Response;
+namespace AlleKurier\WygodneZwroty\Api\Model\Response;
 
-use Allekurier\WygodneZwroty\Api\Lib\Common\Assert\Assert;
+use AlleKurier\WygodneZwroty\Api\Lib\Common\Assert\Assert;
 
 class AccessPoint implements ResponseModelInterface
 {

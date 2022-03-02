@@ -9,17 +9,17 @@
 
 declare(strict_types=1);
 
-namespace Allekurier\WygodneZwroty\Api;
+namespace AlleKurier\WygodneZwroty\Api;
 
-use Allekurier\WygodneZwroty\Api\Command\RequestInterface;
-use Allekurier\WygodneZwroty\Api\Command\ResponseInterface;
-use Allekurier\WygodneZwroty\Api\Lib\Core\Api\Api;
-use Allekurier\WygodneZwroty\Api\Lib\Core\Api\ApiException;
-use Allekurier\WygodneZwroty\Api\Lib\Core\ApiUrlFormatter\ApiUrlFormatter;
-use Allekurier\WygodneZwroty\Api\Lib\Core\Authorization\Authorization;
-use Allekurier\WygodneZwroty\Api\Lib\Core\Errors\ErrorsFactory;
-use Allekurier\WygodneZwroty\Api\Lib\Core\Http\Curl;
-use Allekurier\WygodneZwroty\Api\Lib\Core\ResponseParser\ResponseParser;
+use AlleKurier\WygodneZwroty\Api\Command\RequestInterface;
+use AlleKurier\WygodneZwroty\Api\Command\ResponseInterface;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\Api\Api;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\Api\ApiException;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\ApiUrlFormatter\ApiUrlFormatter;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\Authorization\Authorization;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\Errors\ErrorsFactory;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\Http\Curl;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\ResponseParser\ResponseParser;
 
 class Client
 {

@@ -7,11 +7,11 @@
  * @copyright Copyright (c) 2022 Allekurier Sp. z o.o.
  */
 
-namespace Allekurier\WygodneZwroty\ApiTests\Unit\Lib\Core\ApiUrlFormatter;
+namespace AlleKurier\WygodneZwroty\ApiTests\Unit\Lib\Core\ApiUrlFormatter;
 
-use Allekurier\WygodneZwroty\Api\Command\RequestInterface;
-use Allekurier\WygodneZwroty\Api\Lib\Core\ApiUrlFormatter\ApiUrlFormatter;
-use Allekurier\WygodneZwroty\Api\Lib\Core\ApiUrlFormatter\ApiUrlFormatterInterface;
+use AlleKurier\WygodneZwroty\Api\Command\RequestInterface;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\ApiUrlFormatter\ApiUrlFormatter;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\ApiUrlFormatter\ApiUrlFormatterInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

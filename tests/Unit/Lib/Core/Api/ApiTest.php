@@ -7,19 +7,19 @@
  * @copyright Copyright (c) 2022 Allekurier Sp. z o.o.
  */
 
-namespace Allekurier\WygodneZwroty\ApiTests\Unit\Lib\Core\Api;
+namespace AlleKurier\WygodneZwroty\ApiTests\Unit\Lib\Core\Api;
 
-use Allekurier\WygodneZwroty\Api\Command\RequestInterface;
-use Allekurier\WygodneZwroty\Api\Command\ResponseInterface;
-use Allekurier\WygodneZwroty\Api\Credentials;
-use Allekurier\WygodneZwroty\Api\Lib\Core\Api\Api;
-use Allekurier\WygodneZwroty\Api\Lib\Core\Api\ApiException;
-use Allekurier\WygodneZwroty\Api\Lib\Core\ApiUrlFormatter\ApiUrlFormatterInterface;
-use Allekurier\WygodneZwroty\Api\Lib\Core\Authorization\AuthorizationInterface;
-use Allekurier\WygodneZwroty\Api\Lib\Core\Http\HttpInterface;
-use Allekurier\WygodneZwroty\Api\Lib\Core\Http\HttpResponse;
-use Allekurier\WygodneZwroty\Api\Lib\Core\Http\MethodEnum;
-use Allekurier\WygodneZwroty\Api\Lib\Core\ResponseParser\ResponseParserInterface;
+use AlleKurier\WygodneZwroty\Api\Command\RequestInterface;
+use AlleKurier\WygodneZwroty\Api\Command\ResponseInterface;
+use AlleKurier\WygodneZwroty\Api\Credentials;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\Api\Api;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\Api\ApiException;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\ApiUrlFormatter\ApiUrlFormatterInterface;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\Authorization\AuthorizationInterface;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\Http\HttpInterface;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\Http\HttpResponse;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\Http\MethodEnum;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\ResponseParser\ResponseParserInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

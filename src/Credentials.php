@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Allekurier\WygodneZwroty\Api;
+namespace AlleKurier\WygodneZwroty\Api;
 
 class Credentials
 {

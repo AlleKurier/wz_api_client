@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Allekurier\WygodneZwroty\Api\Command;
+namespace AlleKurier\WygodneZwroty\Api\Command;
 
 use Exception;
 

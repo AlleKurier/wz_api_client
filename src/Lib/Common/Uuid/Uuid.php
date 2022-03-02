@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Allekurier\WygodneZwroty\Api\Lib\Common\Uuid;
+namespace AlleKurier\WygodneZwroty\Api\Lib\Common\Uuid;
 
 use InvalidArgumentException;
 

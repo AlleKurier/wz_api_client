@@ -7,9 +7,9 @@
  * @copyright Copyright (c) 2022 Allekurier Sp. z o.o.
  */
 
-namespace Allekurier\WygodneZwroty\Api\Command;
+namespace AlleKurier\WygodneZwroty\Api\Command;
 
-use Allekurier\WygodneZwroty\Api\Lib\Core\Http\MethodEnum;
+use AlleKurier\WygodneZwroty\Api\Lib\Core\Http\MethodEnum;
 
 interface RequestInterface
 {
