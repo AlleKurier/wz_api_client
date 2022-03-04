@@ -9,8 +9,6 @@
 
 namespace AlleKurier\WygodneZwroty\Api\Command;
 
-use AlleKurier\WygodneZwroty\Api\Lib\Core\Http\MethodEnum;
-
 interface RequestInterface
 {
     /**

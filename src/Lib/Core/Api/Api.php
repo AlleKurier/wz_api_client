@@ -16,14 +16,15 @@ use AlleKurier\WygodneZwroty\Api\Command\ResponseInterface;
 use AlleKurier\WygodneZwroty\Api\Credentials;
 use AlleKurier\WygodneZwroty\Api\Lib\Core\ApiUrlFormatter\ApiUrlFormatterInterface;
 use AlleKurier\WygodneZwroty\Api\Lib\Core\Authorization\AuthorizationInterface;
-use AlleKurier\WygodneZwroty\Api\Lib\Core\Http\HttpInterface;
 use AlleKurier\WygodneZwroty\Api\Lib\Core\ResponseParser\ResponseParserInterface;
+use GuzzleHttp\Psr7\Request;
+use Psr\Http\Client\ClientInterface;
 
 class Api
 {
-    private const HTTP_HEADER_AUTORIZATION = 'Authorization';
+    private const HTTP_HEADER_AUTHORIZATION = 'Authorization';
 
-    private HttpInterface $http;
+    private ClientInterface $client;
 
     private ApiUrlFormatterInterface $apiUrlFormatter;
 
@@ -38,7 +39,7 @@ class Api
     /**
      * Konstruktor
      *
-     * @param HttpInterface $http
+     * @param ClientInterface $client
      * @param ApiUrlFormatterInterface $apiUrlFormatter
      * @param AuthorizationInterface $authorization
      * @param ResponseParserInterface $responseParser
@@ -46,21 +47,19 @@ class Api
      * @param string $apiUrl
      */
     public function __construct(
-        HttpInterface $http,
+        ClientInterface $client,
         ApiUrlFormatterInterface $apiUrlFormatter,
         AuthorizationInterface $authorization,
         ResponseParserInterface $responseParser,
         Credentials $credentials,
         string $apiUrl
     ) {
-        $this->http = $http;
+        $this->client = $client;
         $this->apiUrlFormatter = $apiUrlFormatter;
         $this->authorization = $authorization;
         $this->responseParser = $responseParser;
         $this->credentials = $credentials;
         $this->apiUrl = $apiUrl;
-
-        $this->http->addHeader('Content-Type', 'application/json');
     }
 
     /**
@@ -83,19 +82,22 @@ class Api
 
         $authorizationHeader = $this->authorization->getHttpHeader($this->credentials->getToken());
 
-        $this->http->removeHeader(self::HTTP_HEADER_AUTORIZATION);
-        $this->http->addHeader(self::HTTP_HEADER_AUTORIZATION, $authorizationHeader);
-
         $httpMethod = $request->getHttpMethod();
 
-        $response = $this->http->fetch(
+        $httpRequest = new Request(
+            $httpMethod->getValue(),
             $url,
-            $httpMethod,
+            [
+                'Content-Type' => 'application/json',
+                self::HTTP_HEADER_AUTHORIZATION => $authorizationHeader,
+            ],
             $requestDataString
         );
 
-        $responseHeaders = $response->getResponseHeaders();
-        $responseBody = $response->getResponseBody();
+        $httpResponse = $this->client->sendRequest($httpRequest);
+
+        $responseHeaders = $httpResponse->getHeaders();
+        $responseBody = $httpResponse->getBody()->getContents();
 
         $responseData = json_decode($responseBody, true);
         if (is_null($responseData)) {

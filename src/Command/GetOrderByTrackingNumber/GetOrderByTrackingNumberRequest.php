@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace AlleKurier\WygodneZwroty\Api\Command\GetOrderByTrackingNumber;
 
+use AlleKurier\WygodneZwroty\Api\Command\MethodEnum;
 use AlleKurier\WygodneZwroty\Api\Command\RequestInterface;
 use AlleKurier\WygodneZwroty\Api\Command\ResponseInterface;
-use AlleKurier\WygodneZwroty\Api\Lib\Core\Http\MethodEnum;
 
 class GetOrderByTrackingNumberRequest implements RequestInterface
 {

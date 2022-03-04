@@ -9,6 +9,7 @@
 
 namespace AlleKurier\WygodneZwroty\ApiTests\Unit\Lib\Core\Api;
 
+use AlleKurier\WygodneZwroty\Api\Command\MethodEnum;
 use AlleKurier\WygodneZwroty\Api\Command\RequestInterface;
 use AlleKurier\WygodneZwroty\Api\Command\ResponseInterface;
 use AlleKurier\WygodneZwroty\Api\Credentials;
@@ -16,12 +17,12 @@ use AlleKurier\WygodneZwroty\Api\Lib\Core\Api\Api;
 use AlleKurier\WygodneZwroty\Api\Lib\Core\Api\ApiException;
 use AlleKurier\WygodneZwroty\Api\Lib\Core\ApiUrlFormatter\ApiUrlFormatterInterface;
 use AlleKurier\WygodneZwroty\Api\Lib\Core\Authorization\AuthorizationInterface;
-use AlleKurier\WygodneZwroty\Api\Lib\Core\Http\HttpInterface;
-use AlleKurier\WygodneZwroty\Api\Lib\Core\Http\HttpResponse;
-use AlleKurier\WygodneZwroty\Api\Lib\Core\Http\MethodEnum;
 use AlleKurier\WygodneZwroty\Api\Lib\Core\ResponseParser\ResponseParserInterface;
+use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\StreamInterface;
 
 class ApiTest extends TestCase
 {
@@ -30,9 +31,9 @@ class ApiTest extends TestCase
     private Api $api;
 
     /**
-     * @var MockObject|HttpInterface
+     * @var MockObject|ClientInterface
      */
-    private MockObject $http;
+    private MockObject $client;
 
     /**
      * @var MockObject|ApiUrlFormatterInterface
@@ -60,9 +61,14 @@ class ApiTest extends TestCase
     private MockObject $request;
 
     /**
-     * @var MockObject|HttpResponse
+     * @var MockObject|\Psr\Http\Message\ResponseInterface
      */
     private MockObject $httpResponse;
+
+    /**
+     * @var MockObject|StreamInterface
+     */
+    private MockObject $stream;
 
     /**
      * @var MockObject|ResponseInterface
@@ -71,18 +77,19 @@ class ApiTest extends TestCase
 
     public function setUp(): void
     {
-        $this->http = $this->createMock(HttpInterface::class);
+        $this->client = $this->createMock(ClientInterface::class);
         $this->apiUrlFormatter = $this->createMock(ApiUrlFormatterInterface::class);
         $this->authorization = $this->createMock(AuthorizationInterface::class);
         $this->responseParser = $this->createMock(ResponseParserInterface::class);
         $this->credentials = $this->createMock(Credentials::class);
 
         $this->request = $this->createMock(RequestInterface::class);
-        $this->httpResponse = $this->createMock(HttpResponse::class);
+        $this->httpResponse = $this->createMock(Response::class);
+        $this->stream = $this->createMock(StreamInterface::class);
         $this->response = $this->createMock(ResponseInterface::class);
 
         $this->api = new Api(
-            $this->http,
+            $this->client,
             $this->apiUrlFormatter,
             $this->authorization,
             $this->responseParser,
@@ -133,25 +140,20 @@ class ApiTest extends TestCase
             ->with($credentialsToken)
             ->willReturn($httpAuthorizationHeader);
 
-        $this->http
-            ->method('removeHeader')
-            ->with('Authorization');
-
-        $this->http
-            ->method('addHeader')
-            ->with('Authorization', $httpAuthorizationHeader);
-
-        $this->http
-            ->method('fetch')
-            ->with($formattedUrl, $httpMethod, json_encode($requestData))
+        $this->client
+            ->method('sendRequest')
             ->willReturn($this->httpResponse);
 
         $this->httpResponse
-            ->method('getResponseHeaders')
+            ->method('getHeaders')
             ->willReturn($responseHeaders);
 
         $this->httpResponse
-            ->method('getResponseBody')
+            ->method('getBody')
+            ->willReturn($this->stream);
+
+        $this->stream
+            ->method('getContents')
             ->willReturn($responseBody);
 
         $this->responseParser
