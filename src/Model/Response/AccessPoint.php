@@ -11,8 +11,6 @@ declare(strict_types=1);
 
 namespace AlleKurier\WygodneZwroty\Api\Model\Response;
 
-use AlleKurier\WygodneZwroty\Api\Lib\Common\Assert\Assert;
-
 class AccessPoint implements ResponseModelInterface
 {
     private string $code;
@@ -63,51 +61,13 @@ class AccessPoint implements ResponseModelInterface
      */
     public static function createFromArray(array $data): self
     {
-        Assert::keyExists($data, 'code');
-        Assert::string($data['code']);
         $code = $data['code'];
-
-        if (!empty($data['name'])) {
-            Assert::string($data['name']);
-            $name = $data['name'];
-        } else {
-            $name = null;
-        }
-
-        if (!empty($data['address'])) {
-            Assert::string($data['address']);
-            $address = $data['address'];
-        } else {
-            $address = null;
-        }
-
-        if (!empty($data['postal_code'])) {
-            Assert::string($data['postal_code']);
-            $postalCode = $data['postal_code'];
-        } else {
-            $postalCode = null;
-        }
-
-        if (!empty($data['city'])) {
-            Assert::string($data['city']);
-            $city = $data['city'];
-        } else {
-            $city = null;
-        }
-
-        if (!empty($data['description'])) {
-            Assert::string($data['description']);
-            $description = $data['description'];
-        } else {
-            $description = null;
-        }
-
-        if (!empty($data['open_hours'])) {
-            Assert::string($data['open_hours']);
-            $openHours = $data['open_hours'];
-        } else {
-            $openHours = null;
-        }
+        $name = $data['name'] ?? null;
+        $address = $data['address'] ?? null;
+        $postalCode = $data['postal_code'] ?? null;
+        $city = $data['city'] ?? null;
+        $description = $data['description'] ?? null;
+        $openHours = $data['open_hours'] ?? null;
 
         return new self(
             $code,

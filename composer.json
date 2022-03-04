@@ -6,10 +6,6 @@
     "require": {
         "php": ">=7.4.0",
         "ext-json": "*",
-        "myclabs/php-enum": "^1.7",
-        "php-curl-class/php-curl-class": "^9.5.0",
-        "ramsey/uuid": "^4.2.0",
-        "webmozart/assert": "^1.10.0",
         "guzzlehttp/guzzle": "^7.4.1"
     },
     "require-dev": {

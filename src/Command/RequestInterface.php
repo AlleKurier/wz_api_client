@@ -14,9 +14,9 @@ interface RequestInterface
     /**
      * Pobranie metody HTTP dla komendy API
      *
-     * @return MethodEnum
+     * @return string
      */
-    public function getHttpMethod(): MethodEnum;
+    public function getHttpMethod(): string;
 
     /**
      * Pobranie adresu API dla komendy API

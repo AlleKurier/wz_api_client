@@ -11,12 +11,9 @@ declare(strict_types=1);
 
 namespace AlleKurier\WygodneZwroty\Api\Model\Response;
 
-use AlleKurier\WygodneZwroty\Api\Lib\Common\Assert\Assert;
-use AlleKurier\WygodneZwroty\Api\Lib\Common\Uuid\Uuid;
-
 class Order implements ResponseModelInterface
 {
-    private Uuid $hid;
+    private string $hid;
 
     private User $user;
 
@@ -27,12 +24,12 @@ class Order implements ResponseModelInterface
     /**
      * Konstruktor
      *
-     * @param Uuid $hid
+     * @param string $hid
      * @param User $user
      * @param Identity $sender
      * @param array $additionalFields
      */
-    private function __construct(Uuid $hid, User $user, Identity $sender, array $additionalFields)
+    private function __construct(string $hid, User $user, Identity $sender, array $additionalFields)
     {
         $this->hid = $hid;
         $this->user = $user;
@@ -45,24 +42,12 @@ class Order implements ResponseModelInterface
      */
     public static function createFromArray(array $data): self
     {
-        Assert::keyExists($data, 'hid');
-        Assert::string($data['hid']);
-        $hid = new Uuid($data['hid']);
-
-        Assert::keyExists($data, 'user');
-        Assert::isArray($data['user']);
+        $hid = $data['hid'];
         $user = User::createFromArray($data['user']);
-
-        Assert::keyExists($data, 'sender');
-        Assert::isArray($data['sender']);
         $sender = Identity::createFromArray($data['sender']);
-
-        if (!empty($data['additional_fields'])) {
-            Assert::string($data['additional_fields']);
-            $additionalFields = $data['additional_fields'];
-        } else {
-            $additionalFields = [];
-        }
+        $additionalFields = !empty($data['additional_fields'])
+            ? $data['additional_fields']
+            : [];
 
         return new self(
             $hid,
@@ -75,9 +60,9 @@ class Order implements ResponseModelInterface
     /**
      * Pobranie identyfikatora przesyłki
      *
-     * @return Uuid
+     * @return string
      */
-    public function getHid(): Uuid
+    public function getHid(): string
     {
         return $this->hid;
     }

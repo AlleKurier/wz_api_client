@@ -13,7 +13,6 @@ namespace AlleKurier\WygodneZwroty\Api\Command\GetOrderByTrackingNumber;
 
 use AlleKurier\WygodneZwroty\Api\Command\AbstractResponse;
 use AlleKurier\WygodneZwroty\Api\Command\ResponseInterface;
-use AlleKurier\WygodneZwroty\Api\Lib\Common\Assert\Assert;
 use AlleKurier\WygodneZwroty\Api\Model\Response\Order;
 
 class GetOrderByTrackingNumberResponse extends AbstractResponse implements ResponseInterface
@@ -27,8 +26,6 @@ class GetOrderByTrackingNumberResponse extends AbstractResponse implements Respo
      */
     public function __construct(array $responseData)
     {
-        Assert::keyExists($responseData, 'order');
-
         $this->order = Order::createFromArray($responseData['order']);
     }
 

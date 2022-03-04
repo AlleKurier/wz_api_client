@@ -13,13 +13,13 @@ namespace AlleKurier\WygodneZwroty\Api;
 
 use AlleKurier\WygodneZwroty\Api\Command\RequestInterface;
 use AlleKurier\WygodneZwroty\Api\Command\ResponseInterface;
-use AlleKurier\WygodneZwroty\Api\Lib\Core\Api\Api;
-use AlleKurier\WygodneZwroty\Api\Lib\Core\Api\ApiException;
-use AlleKurier\WygodneZwroty\Api\Lib\Core\ApiUrlFormatter\ApiUrlFormatter;
-use AlleKurier\WygodneZwroty\Api\Lib\Core\Authorization\Authorization;
-use AlleKurier\WygodneZwroty\Api\Lib\Core\Errors\ErrorsFactory;
-use AlleKurier\WygodneZwroty\Api\Lib\Core\Http\Curl;
-use AlleKurier\WygodneZwroty\Api\Lib\Core\ResponseParser\ResponseParser;
+use AlleKurier\WygodneZwroty\Api\Lib\Api\Api;
+use AlleKurier\WygodneZwroty\Api\Lib\Api\ApiException;
+use AlleKurier\WygodneZwroty\Api\Lib\ApiUrlFormatter\ApiUrlFormatter;
+use AlleKurier\WygodneZwroty\Api\Lib\Authorization\Authorization;
+use AlleKurier\WygodneZwroty\Api\Lib\Errors\ErrorsFactory;
+use AlleKurier\WygodneZwroty\Api\Lib\ResponseParser\ResponseParser;
+use Psr\Http\Client\ClientExceptionInterface;
 
 class Client
 {
@@ -34,14 +34,14 @@ class Client
      */
     public function __construct(Credentials $credentials)
     {
-        $http = new Curl();
+        $httpClient = new \GuzzleHttp\Client();
         $apiUrlFormatter = new ApiUrlFormatter();
         $authorization = new Authorization();
         $errorsFactory = new ErrorsFactory();
         $responseParser = new ResponseParser($errorsFactory);
 
         $this->api = new Api(
-            $http,
+            $httpClient,
             $apiUrlFormatter,
             $authorization,
             $responseParser,
@@ -66,6 +66,7 @@ class Client
      * @param RequestInterface $request
      * @return ResponseInterface
      * @throws ApiException
+     * @throws ClientExceptionInterface
      */
     public function call(RequestInterface $request): ResponseInterface
     {

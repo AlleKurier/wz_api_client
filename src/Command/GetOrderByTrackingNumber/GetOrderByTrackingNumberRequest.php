@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace AlleKurier\WygodneZwroty\Api\Command\GetOrderByTrackingNumber;
 
-use AlleKurier\WygodneZwroty\Api\Command\MethodEnum;
 use AlleKurier\WygodneZwroty\Api\Command\RequestInterface;
 use AlleKurier\WygodneZwroty\Api\Command\ResponseInterface;
 
@@ -42,9 +41,9 @@ class GetOrderByTrackingNumberRequest implements RequestInterface
     /**
      * {@inheritDoc}
      */
-    public function getHttpMethod(): MethodEnum
+    public function getHttpMethod(): string
     {
-        return MethodEnum::GET();
+        return 'GET';
     }
 
     /**

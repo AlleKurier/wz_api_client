@@ -33,9 +33,97 @@ gdzie:
 * `kod_klienta`: Kod autoryzacyjny klienta.
 * `token_autoryzacyjny`: Token autoryzacyjny.
 
+Zwracane dane są zawsze w formacie JSON. W celu sprawdzenia czy nie wystąpił błąd można sprawdzić jeden z następujących elementów:
+
+* `failure`: Jest ustawione na `true`, gdy zwrócony został błąd.
+* `successful`: Jest ustawiony na `true`, gdy błąd nie wystąpił.
+
+Oba elementy są zawsze zwracane w każdej odpowiedzi z API.
+
+Jeżeli nie wystąpił błąd, wszystkie dane zwracane są w elemencie o kluczu `data`.
+
+W przypadku wystąpienia błędu zwracane są następujące elementy:
+
+* `errors`: Tablica błędów.
+* `mainError`: Główny błąd.
+
+Każdy z błędów - czy to w tablicy `errors` czy w elemencie `mainError` - zawiera następujące elementy:
+
+* `message`: Opis błędu.
+* `code`: Kod błędu. Może zwrócić wartość `null`.
+* `level`: Poziom błędu: Dostępne są poziomy: `notice`, `warning`, `critical`.
+
+...
+
+Przykład:
+
+{
+    "errors":[
+        {
+            "message":"Zam\u00f3wienie nie istnieje",
+            "code":null,
+            "level":"critical"
+        }
+    ],
+    "mainError":{
+        "message":"Zam\u00f3wienie nie istnieje",
+        "code":null,
+        "level":"critical"
+    },
+    "failure":true,
+    "successful":false
+}
+
 ### Pobranie danych przesyłki
 
-#### PHP
+#### Zapytanie
+
+https://new.allekurier.pl/api/v1/kod_klienta/order/trackingnumber/numer_sledzenia
+
+gdzie:
+
+* `kod_klienta`: Kod autoryzacyjny klienta.
+* `token_autoryzacyjny`: Token autoryzacyjny.
+* `numer_sledzenia`: Numer śledzenia przesyłki lub numer, który został zeskanowany na liście przewozowym.
+
+#### Odpowiedź
+
+...
+!!!!
+{
+    "failure":false,
+    "successful":true,
+    "data":{
+        "order":{
+            "hid":"069439d9-78b5-4992-b2e0-3664491eeac9",
+            "user":{
+                "email":"test@allekurier.pl"
+            },
+            "sender":{
+                "name":"name",
+                "company":"company",
+                "address":"address",
+                "postal_code":"32-020",
+                "city":"Wieliczka",
+                "country":{
+                    "code":"PL",
+                    "name":"Polska"
+                },
+                "state":null,
+                "phone":"123123123",
+                "email":"test@allekurier.pl",
+                "access_point":null
+            },
+            "additional_fields":null
+        }
+    }
+}
+!!!!
+...
+
+#### Przykłady
+
+##### PHP
 
 ```
 $request = new AlleKurier\WygodneZwroty\Api\Command\GetOrderByTrackingNumber\GetOrderByTrackingNumberRequest(
@@ -81,7 +169,7 @@ gdzie:
 
 * `numer_sledzenia`: Numer śledzenia przesyłki lub numer, który został zeskanowany na liście przewozowym.
 
-#### cURL
+##### cURL
 
 ```bash
 curl -X GET \

@@ -11,8 +11,6 @@ declare(strict_types=1);
 
 namespace AlleKurier\WygodneZwroty\Api\Model\Response;
 
-use AlleKurier\WygodneZwroty\Api\Lib\Common\Assert\Assert;
-
 class Country implements ResponseModelInterface
 {
     private string $code;
@@ -36,12 +34,7 @@ class Country implements ResponseModelInterface
      */
     public static function createFromArray(array $data): self
     {
-        Assert::keyExists($data, 'code');
-        Assert::string($data['code']);
         $code = $data['code'];
-
-        Assert::keyExists($data, 'name');
-        Assert::string($data['name']);
         $name = $data['name'];
 
         return new self(

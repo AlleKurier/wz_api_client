@@ -11,8 +11,6 @@ declare(strict_types=1);
 
 namespace AlleKurier\WygodneZwroty\Api\Model\Response;
 
-use AlleKurier\WygodneZwroty\Api\Lib\Common\Assert\Assert;
-
 class Identity implements ResponseModelInterface
 {
     private ?string $name;
@@ -78,72 +76,18 @@ class Identity implements ResponseModelInterface
      */
     public static function createFromArray(array $data): self
     {
-        if (!empty($data['name'])) {
-            Assert::string($data['name']);
-            $name = $data['name'];
-        } else {
-            $name = null;
-        }
-
-        if (!empty($data['company'])) {
-            Assert::string($data['company']);
-            $company = $data['company'];
-        } else {
-            $company = null;
-        }
-
-        if (!empty($data['address'])) {
-            Assert::string($data['address']);
-            $address = $data['address'];
-        } else {
-            $address = null;
-        }
-
-        if (!empty($data['postal_code'])) {
-            Assert::string($data['postal_code']);
-            $postalCode = $data['postal_code'];
-        } else {
-            $postalCode = null;
-        }
-
-        if (!empty($data['city'])) {
-            Assert::string($data['city']);
-            $city = $data['city'];
-        } else {
-            $city = null;
-        }
-
-        Assert::keyExists($data, 'country');
-        Assert::isArray($data['country']);
+        $name = $data['name'] ?? null;
+        $company = $data['company'] ?? null;
+        $address = $data['address'] ?? null;
+        $postalCode = $data['postal_code'] ?? null;
+        $city = $data['city'] ?? null;
         $country = Country::createFromArray($data['country']);
-
-        if (!empty($data['state'])) {
-            Assert::string($data['state']);
-            $state = $data['state'];
-        } else {
-            $state = null;
-        }
-
-        if (!empty($data['phone'])) {
-            Assert::string($data['phone']);
-            $phone = $data['phone'];
-        } else {
-            $phone = null;
-        }
-
-        if (!empty($data['email'])) {
-            Assert::string($data['email']);
-            $email = $data['email'];
-        } else {
-            $email = null;
-        }
-
-        if (!empty($data['access_point'])) {
-            Assert::isArray($data['access_point']);
-            $accessPoint = AccessPoint::createFromArray($data['access_point']);
-        } else {
-            $accessPoint = null;
-        }
+        $state = $data['state'] ?? null;
+        $phone = $data['phone'] ?? null;
+        $email = $data['email'] ?? null;
+        $accessPoint = !empty($data['access_point'])
+            ? AccessPoint::createFromArray($data['access_point'])
+            : null;
 
         return new self(
             $name,
