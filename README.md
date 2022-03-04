@@ -137,7 +137,7 @@ if ($response->hasErrors()) {
     foreach ($response->getErrors() as $error) {
         echo $error->getMessage().PHP_EOL;
         echo $error->getCode().PHP_EOL;
-        echo $error->getLevel()->getValue().PHP_EOL;
+        echo $error->getLevel().PHP_EOL;
     }
 } else {
     echo $response->getOrder()->getHid().PHP_EOL;
