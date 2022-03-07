@@ -19,19 +19,29 @@ W celu zainstalowania biblioteki należy użyć następującego polecenia:
 composer require allekurier/wz-api-client
 ```
 
-## Użycie biblioteki
+## Korzystanie z API
+
+### Autoryzacja
 
 W celu nawiązania połączenia z API należy podać dane autoryzacyjne.
 
 ```php
-$credentials = new AlleKurier\WygodneZwroty\Api\Credentials('kod_klienta', 'token_autoryzacyjny');
+$credentials = new AlleKurier\WygodneZwroty\Api\Credentials('KOD_KLIENTA', 'TOKEN_AUTORYZACYJNY');
 $api = new AlleKurier\WygodneZwroty\Api\Client($credentials);
 ```
 
 gdzie:
 
-* `kod_klienta`: Kod autoryzacyjny klienta.
-* `token_autoryzacyjny`: Token autoryzacyjny.
+* `KOD_KLIENTA`: Kod autoryzacyjny klienta.
+* `TOKEN_AUTORYZACYJNY`: Token autoryzacyjny.
+
+Jeżeli zamiast PHP używany ma być inny język należy wysyłać w nagłówku HTTP element `Authorization` typu `Basic` przekazując token autoryzacyjny w formacie BASE64, np.:
+
+```
+Authorization: Basic MTIzNA==
+```
+
+### Zwracane dane
 
 Zwracane dane są zawsze w formacie JSON. W celu sprawdzenia czy nie wystąpił błąd można sprawdzić jeden z następujących elementów:
 
@@ -74,19 +84,20 @@ Przykład:
 }
 ```
 
-### Pobranie danych przesyłki
+### Komendy
 
-#### Zapytanie
+#### Pobranie danych przesyłki
 
-https://new.allekurier.pl/api/v1/kod_klienta/order/trackingnumber/numer_sledzenia
+##### Zapytanie
+
+https://new.allekurier.pl/api/v1/KOD_KLIENTA/order/trackingnumber/NUMER_SLEDZENIA
 
 gdzie:
 
-* `kod_klienta`: Kod autoryzacyjny klienta.
-* `token_autoryzacyjny`: Token autoryzacyjny.
-* `numer_sledzenia`: Numer śledzenia przesyłki lub numer, który został zeskanowany na liście przewozowym.
+* `KOD_KLIENTA`: Kod autoryzacyjny klienta.
+* `NUMER_SLEDZENIA`: Numer śledzenia przesyłki lub numer, który został zeskanowany na liście przewozowym.
 
-#### Odpowiedź
+##### Odpowiedź
 
 W kluczu `data` znajdują się następujące elementy:
 
@@ -157,13 +168,13 @@ Przykład:
 }
 ```
 
-#### Przykłady
+##### Przykłady
 
-##### PHP
+###### PHP
 
 ```php
 $request = new AlleKurier\WygodneZwroty\Api\Command\GetOrderByTrackingNumber\GetOrderByTrackingNumberRequest(
-    'numer_sledzenia'
+    'NUMER_SLEDZENIA'
 );
 
 /** @var \AlleKurier\WygodneZwroty\Api\Command\GetOrderByTrackingNumber\GetOrderByTrackingNumberResponse|\AlleKurier\WygodneZwroty\Api\Lib\Core\Errors\ErrorsInterface $response */
@@ -203,21 +214,21 @@ if ($response->hasErrors()) {
 
 gdzie:
 
-* `numer_sledzenia`: Numer śledzenia przesyłki lub numer, który został zeskanowany na liście przewozowym.
+* `NUMER_SLEDZENIA`: Numer śledzenia przesyłki lub numer, który został zeskanowany na liście przewozowym.
 
-##### cURL
+###### cURL
 
 ```bash
 curl -X GET \
-  https://new.allekurier.pl/api/v1/kod_klienta/order/trackingnumber/numer_sledzenia \
+  https://new.allekurier.pl/api/v1/KOD_KLIENTA/order/trackingnumber/NUMER_SLEDZENIA \
   -H 'accept: application/json' \
   -H 'cache-control: no-cache' \
   -H 'content-type: application/json' \
-  -H 'authorization: token_autoryzacyjny'
+  -H 'authorization: TOKEN_AUTORYZACYJNY'
 ```
 
 gdzie:
 
-* `kod_klienta`: Kod autoryzacyjny klienta.
-* `token_autoryzacyjny`: Token autoryzacyjny.
-* `numer_sledzenia`: Numer śledzenia przesyłki lub numer, który został zeskanowany na liście przewozowym.
+* `KOD_KLIENTA`: Kod autoryzacyjny klienta.
+* `TOKEN_AUTORYZACYJNY`: Token autoryzacyjny.
+* `NUMER_SLEDZENIA`: Numer śledzenia przesyłki lub numer, który został zeskanowany na liście przewozowym.
