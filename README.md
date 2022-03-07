@@ -15,7 +15,7 @@ Biblioteka ma następujące wymagania:
 
 W celu zainstalowania biblioteki należy użyć następującego polecenia:
 
-```
+```bash
 composer require allekurier/wz-api-client
 ```
 
@@ -23,7 +23,7 @@ composer require allekurier/wz-api-client
 
 W celu nawiązania połączenia z API należy podać dane autoryzacyjne.
 
-```
+```php
 $credentials = new AlleKurier\WygodneZwroty\Api\Credentials('kod_klienta', 'token_autoryzacyjny');
 $api = new AlleKurier\WygodneZwroty\Api\Client($credentials);
 ```
@@ -47,16 +47,15 @@ W przypadku wystąpienia błędu zwracane są następujące elementy:
 * `errors`: Tablica błędów.
 * `mainError`: Główny błąd.
 
-Każdy z błędów - czy to w tablicy `errors` czy w elemencie `mainError` - zawiera następujące elementy:
+Każdy z błędów - czy to w tablicy `errors` czy w kluczu `mainError` - zawiera następujące elementy:
 
 * `message`: Opis błędu.
 * `code`: Kod błędu. Może zwrócić wartość `null`.
 * `level`: Poziom błędu: Dostępne są poziomy: `notice`, `warning`, `critical`.
 
-...
-
 Przykład:
 
+```json
 {
     "errors":[
         {
@@ -73,6 +72,7 @@ Przykład:
     "failure":true,
     "successful":false
 }
+```
 
 ### Pobranie danych przesyłki
 
@@ -88,8 +88,37 @@ gdzie:
 
 #### Odpowiedź
 
-...
-!!!!
+W kluczu `data` znajdują się następujące elementy:
+
+* `order`: Zwrócone dane dla znalezionej przesyłki.
+    * `hid`: Identyfikator przesyłki.
+    * `user`: Dane klienta, do którego należy przesyłka.
+      * `email`: Adres e-mail klienta.
+    * `sender`: Dane nadawcy przesyłki.
+      * `name`: Imię i nazwisko nadawcy. W przypadku braku danych zwracana jest wartość NULL.
+      * `company`: Nazwa firmy nadawcy. W przypadku braku danych zwracana jest wartość NULL.
+      * `address`: Adres nadawcy (ulica, budynek i numer lokalu). W przypadku braku danych zwracana jest wartość NULL.
+      * `postal_code`: Kod pocztowy nadawcy. W przypadku braku danych zwracana jest wartość NULL.
+      * `city`: Miejscowość nadawcy. W przypadku braku danych zwracana jest wartość NULL.
+      * `country`: Dane kraju nadawcy.
+        * `code`: Kod kraju nadawcy.
+        * `name`: Nazwa kraju nadawcy.
+      * `state`: Stan do adresu nadawcy (tylko dla krajów, które używają nazw stanów). W przypadku braku danych zwracana jest wartość NULL.
+      * `phone`: Numer telefonu do nadawcy. W przypadku braku danych zwracana jest wartość NULL.
+      * `email`: Adres e-mail nadawcy. W przypadku braku danych zwracana jest wartość NULL.
+      * `access_point`: Dane punktu, z którego nadano przesyłkę. W przypadku braku danych zwracana jest wartość NULL.
+        * `code`: Kod punktu.
+        * `name`: Nazwa punktu. W przypadku braku danych zwracana jest wartość NULL.
+        * `address`: Adres punktu (ulica, budynek i numer lokalu). W przypadku braku danych zwracana jest wartość NULL.
+        * `postal_code`: Kod pocztowy punktu. W przypadku braku danych zwracana jest wartość NULL.
+        * `city`: Miejscowość punktu. W przypadku braku danych zwracana jest wartość NULL.
+        * `description`: Opis punktu. W przypadku braku danych zwracana jest wartość NULL.
+        * `open_hours`: Godziny otwarcia punktu. W przypadku braku danych zwracana jest wartość NULL.
+      * `additional_fields`: Dodatkowe pola informacyjne podane przez klienta podczas zlecania zwrotu - format JSON. W przypadku braku danych zwracana jest wartość NULL.
+
+Przykład:
+
+```json
 {
     "failure":false,
     "successful":true,
@@ -112,20 +141,27 @@ gdzie:
                 "state":null,
                 "phone":"123123123",
                 "email":"test@allekurier.pl",
-                "access_point":null
+                "access_point":{
+                    "code":"BAN01A",
+                    "name":"name",
+                    "address":"address",
+                    "postal_code":"39-200",
+                    "city":"City",
+                    "description":"description",
+                    "open_hours":""
+                }
             },
-            "additional_fields":null
+            "additional_fields":[{"name":"orderNumber","title":"Numer zam\u00f3wienia","value":"12345678"},{"name":"returnCase","title":"Pow\u00f3d zwrotu","value":"Inny pow\u00f3d"},{"name":"bankAccount","title":"Numer konta bankowego do zwrotu \u015brodk\u00f3w","value":"12 3456 7890 1234 5678 9012 3456"},{"name":"bankAccountUsed","title":"Czy podany numer rachunku jest tym samym z kt\u00f3rego zosta\u0142a dokonana p\u0142atno\u015b\u0107 za zam\u00f3wienie?","value":"TAK"}]
         }
     }
 }
-!!!!
-...
+```
 
 #### Przykłady
 
 ##### PHP
 
-```
+```php
 $request = new AlleKurier\WygodneZwroty\Api\Command\GetOrderByTrackingNumber\GetOrderByTrackingNumberRequest(
     'numer_sledzenia'
 );
