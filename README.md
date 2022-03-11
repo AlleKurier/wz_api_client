@@ -102,6 +102,11 @@ gdzie:
 W kluczu `data` znajdują się następujące elementy:
 
 * `order`: Zwrócone dane dla znalezionej przesyłki.
+    * `additional_fields`: Dodatkowe pola informacyjne podane przez klienta podczas zlecania zwrotu - format JSON. W danych znajduje się tablica obiektów, z których każdy zawiera następujące elementy:
+        * `name`: Nazwa dodatkowego pola - w danych na pewno znajduje się pole o nazwie `orderNumber`, które zawiera numer zamówienia, którego dotyczy zwrot.
+        * `title`: Tytuł dodatkowego pola, który pojawiał się klientowi podczas składania zlecenia na zwrot.
+        * `value`: Wartość dodatkowego pola.
+    * Zawiera m.in. pole "orderNumber" z numerem zamówienia, którego dotyczy przesyłka. W przypadku braku danych zwracana jest wartość NULL.
     * `hid`: Identyfikator przesyłki.
     * `user`: Dane klienta, do którego należy przesyłka.
       * `email`: Adres e-mail klienta.
@@ -125,7 +130,6 @@ W kluczu `data` znajdują się następujące elementy:
         * `city`: Miejscowość punktu. W przypadku braku danych zwracana jest wartość NULL.
         * `description`: Opis punktu. W przypadku braku danych zwracana jest wartość NULL.
         * `open_hours`: Godziny otwarcia punktu. W przypadku braku danych zwracana jest wartość NULL.
-      * `additional_fields`: Dodatkowe pola informacyjne podane przez klienta podczas zlecania zwrotu - format JSON. W przypadku braku danych zwracana jest wartość NULL.
 
 Przykład:
 
@@ -135,6 +139,18 @@ Przykład:
     "successful":true,
     "data":{
         "order":{
+            "additional_fields":[
+                {
+                    "name":"orderNumber",
+                    "title":"Numer zam\u00f3wienia",
+                    "value":"12345678"
+                },
+                {
+                    "name":"returnCase",
+                    "title":"Pow\u00f3d zwrotu",
+                    "value":"Inny pow\u00f3d"
+                }
+            ],
             "hid":"069439d9-78b5-4992-b2e0-3664491eeac9",
             "user":{
                 "email":"test@allekurier.pl"
@@ -161,8 +177,7 @@ Przykład:
                     "description":"description",
                     "open_hours":""
                 }
-            },
-            "additional_fields":[{"name":"orderNumber","title":"Numer zam\u00f3wienia","value":"12345678"},{"name":"returnCase","title":"Pow\u00f3d zwrotu","value":"Inny pow\u00f3d"},{"name":"bankAccount","title":"Numer konta bankowego do zwrotu \u015brodk\u00f3w","value":"12 3456 7890 1234 5678 9012 3456"},{"name":"bankAccountUsed","title":"Czy podany numer rachunku jest tym samym z kt\u00f3rego zosta\u0142a dokonana p\u0142atno\u015b\u0107 za zam\u00f3wienie?","value":"TAK"}]
+            }
         }
     }
 }
@@ -177,7 +192,7 @@ $request = new AlleKurier\WygodneZwroty\Api\Command\GetOrderByTrackingNumber\Get
     'NUMER_SLEDZENIA'
 );
 
-/** @var \AlleKurier\WygodneZwroty\Api\Command\GetOrderByTrackingNumber\GetOrderByTrackingNumberResponse|\AlleKurier\WygodneZwroty\Api\Lib\Core\Errors\ErrorsInterface $response */
+/** @var \AlleKurier\WygodneZwroty\Api\Command\GetOrderByTrackingNumber\GetOrderByTrackingNumberResponse|\AlleKurier\WygodneZwroty\Api\Lib\Errors\ErrorsInterface $response */
 $response = $api->call($request);
 
 if ($response->hasErrors()) {
@@ -187,6 +202,13 @@ if ($response->hasErrors()) {
         echo $error->getLevel().PHP_EOL;
     }
 } else {
+    foreach ($response->getOrder()->getAdditionalFields() as $additionalField) {
+        echo
+            $additionalField['title'].';'.
+            $additionalField['name'].';'.
+            $additionalField['value'].';'.
+            PHP_EOL;
+    }
     echo $response->getOrder()->getHid().PHP_EOL;
     echo $response->getOrder()->getUser()->getEmail().PHP_EOL;
     echo $response->getOrder()->getSender()->getName().PHP_EOL;
@@ -208,7 +230,6 @@ if ($response->hasErrors()) {
         echo $response->getOrder()->getSender()->getAccessPoint()->getDescription().PHP_EOL;
         echo $response->getOrder()->getSender()->getAccessPoint()->getOpenHours().PHP_EOL;
     }
-    var_dump($response->getOrder()->getAdditionalFields()).PHP_EOL;
 }
 ```
 
