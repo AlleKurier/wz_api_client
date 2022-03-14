@@ -19,7 +19,7 @@ class Order implements ResponseModelInterface
 
     private Identity $sender;
 
-    private array $additionalFields;
+    private AdditionalFields $additionalFields;
 
     /**
      * Konstruktor
@@ -27,9 +27,9 @@ class Order implements ResponseModelInterface
      * @param string $hid
      * @param User $user
      * @param Identity $sender
-     * @param array $additionalFields
+     * @param AdditionalFields $additionalFields
      */
-    private function __construct(string $hid, User $user, Identity $sender, array $additionalFields)
+    private function __construct(string $hid, User $user, Identity $sender, AdditionalFields $additionalFields)
     {
         $this->hid = $hid;
         $this->user = $user;
@@ -45,9 +45,9 @@ class Order implements ResponseModelInterface
         $hid = $data['hid'];
         $user = User::createFromArray($data['user']);
         $sender = Identity::createFromArray($data['sender']);
-        $additionalFields = !empty($data['additional_fields'])
+        $additionalFields = AdditionalFields::createFromArray(!empty($data['additional_fields'])
             ? $data['additional_fields']
-            : [];
+            : []);
 
         return new self(
             $hid,
@@ -65,6 +65,20 @@ class Order implements ResponseModelInterface
     public function getHid(): string
     {
         return $this->hid;
+    }
+
+    /**
+     * Pobranie numeru zamówienia jeżeli istnieje
+     *
+     * @return string|null
+     */
+    public function getNumber(): ?string
+    {
+        $orderNumber = $this->additionalFields->findByName('orderNumber');
+
+        return !is_null($orderNumber)
+            ? $orderNumber->getValue()
+            : null;
     }
 
     /**
@@ -90,9 +104,9 @@ class Order implements ResponseModelInterface
     /**
      * Pobranie dodatkowych pól opisujących przesyłkę
      *
-     * @return array
+     * @return AdditionalFields
      */
-    public function getAdditionalFields(): array
+    public function getAdditionalFields(): AdditionalFields
     {
         return $this->additionalFields;
     }

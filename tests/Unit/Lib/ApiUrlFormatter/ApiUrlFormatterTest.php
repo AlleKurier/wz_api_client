@@ -39,9 +39,10 @@ class ApiUrlFormatterTest extends TestCase
     public function test_get_formatted_url(
         string $authorizationCode,
         string $endpoint,
-        array $parameters,
+        array  $parameters,
         string $expectedFormattedUrl
-    ): void {
+    ): void
+    {
         $this->request
             ->method('getEndpoint')
             ->willReturn($endpoint);

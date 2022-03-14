@@ -32,9 +32,10 @@ class ResponseParser implements ResponseParserInterface
      */
     public function getParsedResponse(
         RequestInterface $request,
-        array $responseHeaders,
-        array $responseData
-    ): ResponseInterface {
+        array            $responseHeaders,
+        array            $responseData
+    ): ResponseInterface
+    {
         if (!empty($responseData['failure'])) {
             return $this->errorsFactory->createFromResponse($responseData);
         } else {

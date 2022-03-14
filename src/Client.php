@@ -23,7 +23,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 
 class Client
 {
-    private const API_URL = 'https://new.allekurier.pl/api/v1';
+    private const API_URL = 'https://api.allekurier.pl/v1';
 
     private Api $api;
 

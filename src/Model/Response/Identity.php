@@ -48,17 +48,18 @@ class Identity implements ResponseModelInterface
      * @param AccessPoint|null $accessPoint
      */
     public function __construct(
-        ?string $name,
-        ?string $company,
-        ?string $address,
-        ?string $postalCode,
-        ?string $city,
-        Country $country,
-        ?string $state,
-        ?string $phone,
-        ?string $email,
+        ?string      $name,
+        ?string      $company,
+        ?string      $address,
+        ?string      $postalCode,
+        ?string      $city,
+        Country      $country,
+        ?string      $state,
+        ?string      $phone,
+        ?string      $email,
         ?AccessPoint $accessPoint
-    ) {
+    )
+    {
         $this->name = $name;
         $this->company = $company;
         $this->address = $address;

@@ -48,13 +48,14 @@ class Api
      * @param string $apiUrl
      */
     public function __construct(
-        ClientInterface $client,
+        ClientInterface          $client,
         ApiUrlFormatterInterface $apiUrlFormatter,
-        AuthorizationInterface $authorization,
-        ResponseParserInterface $responseParser,
-        Credentials $credentials,
-        string $apiUrl
-    ) {
+        AuthorizationInterface   $authorization,
+        ResponseParserInterface  $responseParser,
+        Credentials              $credentials,
+        string                   $apiUrl
+    )
+    {
         $this->client = $client;
         $this->apiUrlFormatter = $apiUrlFormatter;
         $this->authorization = $authorization;

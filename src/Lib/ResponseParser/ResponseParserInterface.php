@@ -24,7 +24,7 @@ interface ResponseParserInterface
      */
     public function getParsedResponse(
         RequestInterface $request,
-        array $responseHeaders,
-        array $responseData
+        array            $responseHeaders,
+        array            $responseData
     ): ResponseInterface;
 }

@@ -39,14 +39,15 @@ class AccessPoint implements ResponseModelInterface
      * @param string|null $openHours
      */
     public function __construct(
-        string $code,
+        string  $code,
         ?string $name,
         ?string $address,
         ?string $postalCode,
         ?string $city,
         ?string $description,
         ?string $openHours
-    ) {
+    )
+    {
         $this->code = $code;
         $this->name = $name;
         $this->address = $address;
