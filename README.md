@@ -101,6 +101,7 @@ gdzie:
 
 W kluczu `data` znajdują się następujące elementy:
 
+<span id="order-details"></span>
 * `order`: Zwrócone dane dla znalezionej przesyłki.
     * `hid`: Identyfikator przesyłki.
     * `user`: Dane klienta, do którego należy przesyłka.
@@ -253,3 +254,190 @@ gdzie:
 * `KOD_KLIENTA`: Kod autoryzacyjny klienta.
 * `TOKEN_AUTORYZACYJNY`: Token autoryzacyjny.
 * `NUMER_SLEDZENIA`: Numer śledzenia przesyłki lub numer, który został zeskanowany na liście przewozowym.
+
+#### Pobranie przesyłek wysłanych w danym dniu
+
+##### Zapytanie
+
+https://api.allekurier.pl/v1/KOD_KLIENTA/order/sent?date=DATA
+
+gdzie:
+
+* `KOD_KLIENTA`: Kod autoryzacyjny klienta.
+* `DATA`: Data w formacie Y-m-d wg, której pobierana jest lista przesyłek. Gdy null- dzisiejsza data.
+
+##### Odpowiedź
+
+W kluczu `data` znajdują się następujące elementy:
+
+* `orders`: Zwrócone przesyłki.
+  * `order`: Szczegóły przesyłki [zobacz](#order-details)
+
+Przykład:
+
+```json
+{
+    "failure":false,
+    "successful":true,
+    "data":{
+        "orders":[
+            {
+                "hid":"069439d9-78b5-4992-b2e0-3664491eeac9",
+                "user":{
+                    "email":"test@allekurier.pl"
+                },
+                "sender":{
+                    "name":"name",
+                    "company":"company",
+                    "address":"address",
+                    "postal_code":"32-020",
+                    "city":"Wieliczka",
+                    "country":{
+                        "code":"PL",
+                        "name":"Polska"
+                    },
+                    "state":null,
+                    "phone":"123123123",
+                    "email":"test@allekurier.pl",
+                    "access_point":{
+                        "code":"BAN01A",
+                        "name":"name",
+                        "address":"address",
+                        "postal_code":"39-200",
+                        "city":"City",
+                        "description":"description",
+                        "open_hours":""
+                    }
+                },
+                "additional_fields":[
+                    {
+                        "name":"orderNumber",
+                        "title":"Numer zam\u00f3wienia",
+                        "value":"12345678"
+                    },
+                    {
+                        "name":"returnCase",
+                        "title":"Pow\u00f3d zwrotu",
+                        "value":"Inny pow\u00f3d"
+                    }
+                ]
+            },
+            {
+                "hid":"121891fe-f7eb-4b03-896f-3a94cae165ba",
+                "user":{
+                    "email":"test@allekurier.pl"
+                },
+                "sender":{
+                    "name":"name",
+                    "company":"company 2",
+                    "address":"address",
+                    "postal_code":"32-020",
+                    "city":"Wieliczka",
+                    "country":{
+                        "code":"PL",
+                        "name":"Polska"
+                    },
+                    "state":null,
+                    "phone":"123123123",
+                    "email":"test@allekurier.pl",
+                    "access_point":{
+                        "code":"BAN01A",
+                        "name":"name",
+                        "address":"address",
+                        "postal_code":"39-200",
+                        "city":"City",
+                        "description":"description",
+                        "open_hours":""
+                    }
+                },
+                "additional_fields":[
+                    {
+                        "name":"orderNumber",
+                        "title":"Numer zam\u00f3wienia",
+                        "value":"123456789"
+                    },
+                    {
+                        "name":"returnCase",
+                        "title":"Pow\u00f3d zwrotu",
+                        "value":"Inny pow\u00f3d"
+                    }
+                ]
+            }
+        ]
+    }
+}
+```
+
+##### Przykłady
+
+###### PHP
+
+```php
+$request = new AlleKurier\WygodneZwroty\Api\Command\GetSentOrders\GetSentOrdersRequest(
+    'DATA'
+);
+
+/** @var \AlleKurier\WygodneZwroty\Api\Command\GetSentOrders\GetSentOrdersResponse|\AlleKurier\WygodneZwroty\Api\Lib\Errors\ErrorsInterface $response */
+$response = $api->call($request);
+
+if ($response->hasErrors()) {
+    foreach ($response->getErrors() as $error) {
+        echo $error->getMessage() . PHP_EOL;
+        echo $error->getCode() . PHP_EOL;
+        echo $error->getLevel() . PHP_EOL;
+    }
+} else {
+    foreach ($response->getOrders() as $order) {
+        echo $order->getNumber() . PHP_EOL;
+        echo $order->getHid() . PHP_EOL;
+        echo $order->getUser()->getEmail() . PHP_EOL;
+        echo $order->getSender()->getName() . PHP_EOL;
+        echo $order->getSender()->getCompany() . PHP_EOL;
+        echo $order->getSender()->getAddress() . PHP_EOL;
+        echo $order->getSender()->getPostalCode() . PHP_EOL;
+        echo $order->getSender()->getCity() . PHP_EOL;
+        echo $order->getSender()->getCountry()->getCode() . PHP_EOL;
+        echo $order->getSender()->getCountry()->getName() . PHP_EOL;
+        echo $order->getSender()->getState() . PHP_EOL;
+        echo $order->getSender()->getPhone() . PHP_EOL;
+        echo $order->getSender()->getEmail() . PHP_EOL;
+        if (!empty($order->getSender()->getAccessPoint())) {
+            echo $order->getSender()->getAccessPoint()->getCode() . PHP_EOL;
+            echo $order->getSender()->getAccessPoint()->getName() . PHP_EOL;
+            echo $order->getSender()->getAccessPoint()->getAddress() . PHP_EOL;
+            echo $order->getSender()->getAccessPoint()->getPostalCode() . PHP_EOL;
+            echo $order->getSender()->getAccessPoint()->getCity() . PHP_EOL;
+            echo $order->getSender()->getAccessPoint()->getDescription() . PHP_EOL;
+            echo $order->getSender()->getAccessPoint()->getOpenHours() . PHP_EOL;
+        }
+        foreach ($order->getAdditionalFields()->getAll() as $additionalField) {
+            echo
+                '"' . $additionalField->getName() . '";' .
+                '"' . $additionalField->getTitle() . '";' .
+                '"' . $additionalField->getValue() . '";' .
+                PHP_EOL;
+        }
+    }
+}
+```
+
+gdzie:
+
+* `DATA`: Data w formacie Y-m-d wg, której pobierana jest lista przesyłek. Gdy null- dzisiejsza data.
+
+###### cURL
+
+```bash
+curl -X GET \
+  https://api.allekurier.pl/v1/KOD_KLIENTA/order/sent?date=DATA \
+  -H 'accept: application/json' \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -H 'authorization: TOKEN_AUTORYZACYJNY'
+```
+
+gdzie:
+
+* `KOD_KLIENTA`: Kod autoryzacyjny klienta.
+* `TOKEN_AUTORYZACYJNY`: Token autoryzacyjny.
+* `DATA`: Data w formacie Y-m-d wg, której pobierana jest lista przesyłek. Gdy null- dzisiejsza data.
