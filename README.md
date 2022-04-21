@@ -441,3 +441,164 @@ gdzie:
 * `KOD_KLIENTA`: Kod autoryzacyjny klienta.
 * `TOKEN_AUTORYZACYJNY`: Token autoryzacyjny.
 * `DATA`: Data w formacie Y-m-d wg, której pobierana jest lista przesyłek. Gdy null- dzisiejsza data.
+
+#### Utworzenie przesyłki zwrotnej
+
+##### Zapytanie
+
+POST https://api.allekurier.pl/v1/KOD_KLIENTA/return-order
+
+gdzie:
+
+* `KOD_KLIENTA`: Kod autoryzacyjny klienta.
+
+Pola post:
+* `service_code`: [kod usługi](#kody-usług)
+* `sender`: dane nadawcy
+  * `name`: imię i nazwisko
+  * `company`: nazwa firmy
+  * `address`: adres
+  * `postal_code`: kod pocztowy
+  * `city`: miasto
+  * `coutry`: kod kraju w formacie ISO 3166
+  * `phone`: telefon
+  * `email`: email
+  * `shipment_type`: typ przesyłki. Dostępne opcje: 
+    * "door"- do odbioru przez kuriera
+    * "point"- nadawca zanosi do punktu
+* `packages`: tablica paczek w przesyłce
+  * `weight`: waga paczki [kg]
+  * `length`: długość paczki [cm]
+  * `width`: szerokość paczki [cm]
+  * `height`: wysokość paczki [cm]
+  * `custom`: true = przesyłka niestandardowa https://allekurier.pl/pakowanie-przesylek/niestandardowa
+* `additional_fields`: tablica pól dodatkowych (dostępne pola są ustalane indywidualnie dla właściciela sklepu). Domyślnie jest wymagane pole `name` = "orderNumber"
+  * `name`: nazwa pola
+  * `value`: wartość
+
+##### Odpowiedź
+
+W kluczu `data` znajdują się następujące elementy:
+
+* `order_hid`: Identyfikator przesyłki w formacie UUID.
+
+Przykład:
+
+```json
+{
+    "failure":false,
+    "successful":true,
+    "data":{
+        "order_hid":"53efe1c9-34ab-43d5-bb40-798e81368b46"
+    }
+}
+```
+
+##### Przykłady
+
+###### PHP
+
+```php
+$request = new AlleKurier\WygodneZwroty\Api\Command\CreateOrder\CreateOrderRequest(
+    new AlleKurier\WygodneZwroty\Api\Model\Request\Order(
+        ServiceCode::INPOST_PACZKOMAT,
+        new AlleKurier\WygodneZwroty\Api\Model\Request\Sender(
+            'Sender name',
+            'Sender company name',
+            'Address 1',
+            '30-147',
+            'Kraków',
+            'PL',
+            '123123123',
+            'test@allekurier.pl',
+            ShipmentType::door
+        ),
+        [
+            new AlleKurier\WygodneZwroty\Api\Model\Request\Package(2.5, 5, 10, 15, false)
+        ],
+        [
+            new AlleKurier\WygodneZwroty\Api\Model\Request\AdditionalField(
+                'orderNumber',
+                '357777',
+            ),
+            new AlleKurier\WygodneZwroty\Api\Model\Request\AdditionalField(
+                'returnCase',
+                'Produkt mi nie odpowiada',
+            ),
+        ],
+    )
+);
+
+/** @var \AlleKurier\WygodneZwroty\Api\Command\CreateOrder\CreateOrderResponse|\AlleKurier\WygodneZwroty\Api\Lib\Errors\ErrorsInterface $response */
+$response = $api->call($request);
+
+if ($response->hasErrors()) {
+    foreach ($response->getErrors() as $error) {
+        echo $error->getMessage() . PHP_EOL;
+        echo $error->getCode() . PHP_EOL;
+        echo $error->getLevel() . PHP_EOL;
+    }
+} else {
+    echo $response->getOrderHid() . PHP_EOL;
+}
+```
+
+###### cURL
+
+```bash
+curl -X POST \
+https://api.allekurier.pl/v1/12345/return-order \
+-H 'accept: application/json' \
+-H 'cache-control: no-cache' \
+-H 'content-type: application/json' \
+-H 'authorization: TOKEN_AUTORYZACYJNY' \
+-d '{
+"service_code":"inpostreturn",
+"sender":{
+    "name":"Sender name",
+    "company":"Sender company name",
+    "address":"Address 1",
+    "postal_code":"30-147",
+    "city":"Kraków",
+    "country":"PL",
+    "phone":"123123123",
+    "email":"test@allekurier.pl",
+    "shipment_type":"point"
+},
+"packages":[
+    {
+        "weight":"2.5",
+        "length":"5",
+        "width":"10",
+        "height":"12.5",
+        "custom":false
+    }
+],
+"additional_fields":[
+    {
+        "name":"orderNumber",
+        "value":"357777"
+    },
+    {
+        "name":"returnCase",
+        "value":"Produkt mi nie odpowiada"
+    }
+]
+}'
+```
+
+gdzie:
+
+* `KOD_KLIENTA`: Kod autoryzacyjny klienta.
+* `TOKEN_AUTORYZACYJNY`: Token autoryzacyjny.
+
+### Słownik
+
+#### Kody usług
+
+| Nazwa usługi     | Kod                |
+|------------------|--------------------|
+| DHL bez etykiety | dhlreturn          |
+| DHL z etykietą   | dhlreturnwithlabel |
+| Inpost Paczkomat | inpostreturn       |
+| GLS Poland       | glspolandreturn    |
