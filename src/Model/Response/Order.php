@@ -19,6 +19,8 @@ class Order implements ResponseModelInterface
 
     private Identity $sender;
 
+    private string $status;
+
     private AdditionalFields $additionalFields;
 
     /**
@@ -29,11 +31,17 @@ class Order implements ResponseModelInterface
      * @param Identity $sender
      * @param AdditionalFields $additionalFields
      */
-    private function __construct(string $hid, User $user, Identity $sender, AdditionalFields $additionalFields)
-    {
+    private function __construct(
+        string $hid,
+        User $user,
+        Identity $sender,
+        string $status,
+        AdditionalFields $additionalFields
+    ) {
         $this->hid = $hid;
         $this->user = $user;
         $this->sender = $sender;
+        $this->status = $status;
         $this->additionalFields = $additionalFields;
     }
 
@@ -45,6 +53,7 @@ class Order implements ResponseModelInterface
         $hid = $data['hid'];
         $user = User::createFromArray($data['user']);
         $sender = Identity::createFromArray($data['sender']);
+        $status = $data['status'];
         $additionalFields = AdditionalFields::createFromArray(!empty($data['additional_fields'])
             ? $data['additional_fields']
             : []);
@@ -53,6 +62,7 @@ class Order implements ResponseModelInterface
             $hid,
             $user,
             $sender,
+            $status,
             $additionalFields
         );
     }
@@ -99,6 +109,16 @@ class Order implements ResponseModelInterface
     public function getSender(): Identity
     {
         return $this->sender;
+    }
+
+    /**
+     * Pobranie statusu zamówienia
+     *
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status;
     }
 
     /**

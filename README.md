@@ -106,6 +106,7 @@ W kluczu `data` znajdują się następujące elementy:
     * `hid`: Identyfikator przesyłki.
     * `user`: Dane klienta, do którego należy przesyłka.
       * `email`: Adres e-mail klienta.
+    * `status`: Status zamówienia.
     * `sender`: Dane nadawcy przesyłki.
       * `name`: Imię i nazwisko nadawcy. W przypadku braku danych zwracana jest wartość NULL.
       * `company`: Nazwa firmy nadawcy. W przypadku braku danych zwracana jest wartość NULL.
@@ -143,6 +144,7 @@ Przykład:
             "user":{
                 "email":"test@allekurier.pl"
             },
+            "status":"sent",
             "sender":{
                 "name":"name",
                 "company":"company",
@@ -204,6 +206,7 @@ if ($response->hasErrors()) {
 } else {
     echo $response->getOrder()->getNumber() . PHP_EOL;
     echo $response->getOrder()->getHid() . PHP_EOL;
+    echo $response->getOrder()->getStatus() . PHP_EOL;
     echo $response->getOrder()->getUser()->getEmail() . PHP_EOL;
     echo $response->getOrder()->getSender()->getName() . PHP_EOL;
     echo $response->getOrder()->getSender()->getCompany() . PHP_EOL;
@@ -286,6 +289,7 @@ Przykład:
                 "user":{
                     "email":"test@allekurier.pl"
                 },
+                "status":"sent",
                 "sender":{
                     "name":"name",
                     "company":"company",
@@ -390,6 +394,7 @@ if ($response->hasErrors()) {
     foreach ($response->getOrders() as $order) {
         echo $order->getNumber() . PHP_EOL;
         echo $order->getHid() . PHP_EOL;
+        echo $order->getStatus() . PHP_EOL;
         echo $order->getUser()->getEmail() . PHP_EOL;
         echo $order->getSender()->getName() . PHP_EOL;
         echo $order->getSender()->getCompany() . PHP_EOL;
@@ -441,3 +446,91 @@ gdzie:
 * `KOD_KLIENTA`: Kod autoryzacyjny klienta.
 * `TOKEN_AUTORYZACYJNY`: Token autoryzacyjny.
 * `DATA`: Data w formacie Y-m-d wg, której pobierana jest lista przesyłek. Gdy null- dzisiejsza data.
+
+#### Pobranie danych przesyłki po indentyfikatorze zamówienia
+
+##### Zapytanie
+
+https://api.allekurier.pl/v1/KOD_KLIENTA/order/IDENTYFIKATOR_ZAMÓWIENIA
+
+gdzie:
+
+* `KOD_KLIENTA`: Kod autoryzacyjny klienta.
+* `IDENTYFIKATOR_ZAMÓWIENIA`: Identyfikator zamówienia w formacie UUID.
+
+##### Odpowiedź
+
+[Zobacz](#pobranie-danych-przesyłki)
+
+##### Przykłady
+
+###### PHP
+
+```php
+$request = new AlleKurier\WygodneZwroty\Api\Command\GetOrderByHid\GetOrderByHidRequest(
+    'IDENTYFIKATOR_ZAMÓWIENIA'
+);
+
+/** @var \AlleKurier\WygodneZwroty\Api\Command\GetOrderByHid\GetOrderByHidResponse|\AlleKurier\WygodneZwroty\Api\Lib\Errors\ErrorsInterface $response */
+$response = $api->call($request);
+
+if ($response->hasErrors()) {
+    foreach ($response->getErrors() as $error) {
+        echo $error->getMessage() . PHP_EOL;
+        echo $error->getCode() . PHP_EOL;
+        echo $error->getLevel() . PHP_EOL;
+    }
+} else {
+    echo $response->getOrder()->getNumber() . PHP_EOL;
+    echo $response->getOrder()->getHid() . PHP_EOL;
+    echo $response->getOrder()->getStatus() . PHP_EOL;
+    echo $response->getOrder()->getUser()->getEmail() . PHP_EOL;
+    echo $response->getOrder()->getSender()->getName() . PHP_EOL;
+    echo $response->getOrder()->getSender()->getCompany() . PHP_EOL;
+    echo $response->getOrder()->getSender()->getAddress() . PHP_EOL;
+    echo $response->getOrder()->getSender()->getPostalCode() . PHP_EOL;
+    echo $response->getOrder()->getSender()->getCity() . PHP_EOL;
+    echo $response->getOrder()->getSender()->getCountry()->getCode() . PHP_EOL;
+    echo $response->getOrder()->getSender()->getCountry()->getName() . PHP_EOL;
+    echo $response->getOrder()->getSender()->getState() . PHP_EOL;
+    echo $response->getOrder()->getSender()->getPhone() . PHP_EOL;
+    echo $response->getOrder()->getSender()->getEmail() . PHP_EOL;
+    if (!empty($response->getOrder()->getSender()->getAccessPoint())) {
+        echo $response->getOrder()->getSender()->getAccessPoint()->getCode() . PHP_EOL;
+        echo $response->getOrder()->getSender()->getAccessPoint()->getName() . PHP_EOL;
+        echo $response->getOrder()->getSender()->getAccessPoint()->getAddress() . PHP_EOL;
+        echo $response->getOrder()->getSender()->getAccessPoint()->getPostalCode() . PHP_EOL;
+        echo $response->getOrder()->getSender()->getAccessPoint()->getCity() . PHP_EOL;
+        echo $response->getOrder()->getSender()->getAccessPoint()->getDescription() . PHP_EOL;
+        echo $response->getOrder()->getSender()->getAccessPoint()->getOpenHours() . PHP_EOL;
+    }
+    foreach ($response->getOrder()->getAdditionalFields()->getAll() as $additionalField) {
+        echo
+            '"' . $additionalField->getName() . '";' .
+            '"' . $additionalField->getTitle() . '";' .
+            '"' . $additionalField->getValue() . '";' .
+            PHP_EOL;
+    }
+}
+```
+
+gdzie:
+
+* `IDENTYFIKATOR_ZAMÓWIENIA`: Identyfikator zamówienia w formacie UUID.
+
+###### cURL
+
+```bash
+curl -X GET \
+  https://api.allekurier.pl/v1/KOD_KLIENTA/order/IDENTYFIKATOR_ZAMÓWIENIA \
+  -H 'accept: application/json' \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -H 'authorization: TOKEN_AUTORYZACYJNY'
+```
+
+gdzie:
+
+* `KOD_KLIENTA`: Kod autoryzacyjny klienta.
+* `TOKEN_AUTORYZACYJNY`: Token autoryzacyjny.
+* `IDENTYFIKATOR_ZAMÓWIENIA`: Identyfikator zamówienia w formacie UUID.
