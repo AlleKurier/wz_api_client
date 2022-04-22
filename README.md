@@ -534,3 +534,104 @@ gdzie:
 * `KOD_KLIENTA`: Kod autoryzacyjny klienta.
 * `TOKEN_AUTORYZACYJNY`: Token autoryzacyjny.
 * `IDENTYFIKATOR_ZAMÓWIENIA`: Identyfikator zamówienia w formacie UUID.
+
+
+#### Tworzenie linku do płatności
+
+##### Zapytanie
+
+Płatność standardowa:
+POST https://api.allekurier.pl/v1/KOD_KLIENTA/payment/dotpay
+
+Płatość BLIK:
+POST https://api.allekurier.pl/v1/KOD_KLIENTA/payment/dotpay-blik
+
+gdzie:
+
+* `KOD_KLIENTA`: Kod autoryzacyjny klienta.
+
+Pola post:
+* `orders`: tablica z identyfikatorami zamówień do opłacenia
+* `returnUrl`: url na który użytkownik zostanie przekierowany po dokonaniu płatności
+
+##### Odpowiedź
+
+W kluczu `data` znajdują się następujące elementy:
+
+* `link`: Link do płatności w systemie Dotpay
+
+Przykład:
+
+```json
+{
+  "failure":false,
+  "successful":true,
+  "data":{
+    "link":"https:\/\/ssl.dotpay.pl\/payment\/?api_version=next\u0026id=123\u0026amount=18.45\u0026currency=PLN(...)"
+  }
+}
+```
+
+##### Przykłady
+
+###### PHP
+
+```php
+$request = new AlleKurier\WygodneZwroty\Api\Command\CreatePayment\CreatePaymentRequest(
+    ['d72ba4cf-ee79-4e93-b001-c9c6ff235bfa'],
+    'return-url.com'
+);
+
+LUB
+
+$request = new AlleKurier\WygodneZwroty\Api\Command\CreatePayment\CreateBlikPaymentRequest(
+    ['d72ba4cf-ee79-4e93-b001-c9c6ff235bfa'],
+    'return-url.com'
+);
+
+/** @var \AlleKurier\WygodneZwroty\Api\Command\CreatePayment\CreatePaymentResponse|\AlleKurier\WygodneZwroty\Api\Lib\Errors\ErrorsInterface $response */
+$response = $api->call($request);
+
+if ($response->hasErrors()) {
+    foreach ($response->getErrors() as $error) {
+        echo $error->getMessage() . PHP_EOL;
+        echo $error->getCode() . PHP_EOL;
+        echo $error->getLevel() . PHP_EOL;
+    }
+} else {
+    echo $response->getPaymentLink() . PHP_EOL;
+}
+```
+
+###### cURL
+
+```bash
+curl -X POST \
+  https://api.allekurier.pl/v1/KOD_KLIENTA/payment/dotpay \
+  -H 'accept: application/json' \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -H 'authorization: TOKEN_AUTORYZACYJNY' \
+  -d '{
+    "orders":["d72ba4cf-ee79-4e93-b001-c9c6ff235bfa"],
+    "returnUrl":"return-url.com"
+  }'
+
+LUB
+  
+curl -X POST \
+  https://api.allekurier.pl/v1/KOD_KLIENTA/payment/dotpay-blik \
+  -H 'accept: application/json' \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -H 'authorization: TOKEN_AUTORYZACYJNY' \
+  -d '{
+    "orders":["d72ba4cf-ee79-4e93-b001-c9c6ff235bfa"],
+    "returnUrl":"return-url.com"
+  }'
+```
+
+gdzie:
+
+* `KOD_KLIENTA`: Kod autoryzacyjny klienta.
+* `TOKEN_AUTORYZACYJNY`: Token autoryzacyjny.
